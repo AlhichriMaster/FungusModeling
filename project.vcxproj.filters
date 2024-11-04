@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MushroomGenerator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin">
+      <UniqueIdentifier>{6ffa187d-98a2-4a28-9587-d99bdf0b5ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\data">
+      <UniqueIdentifier>{87534776-084a-47c3-8bb3-b1a045d9fef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\data\shaders">
+      <UniqueIdentifier>{1d5a9f63-6fef-4f53-be54-4b5b1e9e7687}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MetaBall.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MushroomGenerator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\data\shaders\mushroom.vert">
+      <Filter>bin\data\shaders</Filter>
+    </None>
+    <None Include="bin\data\shaders\mushroom.frag">
+      <Filter>bin\data\shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
