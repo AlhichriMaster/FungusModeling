@@ -1,27 +1,23 @@
-// src/ofApp.cpp
 #include "ofApp.h"
 
 void ofApp::setup() {
     ofSetFrameRate(60);
     ofEnableDepthTest();
-    ofSetLogLevel(OF_LOG_NOTICE);  // Enable logging
-
-    ofLogNotice() << "Starting application setup";
 
     wireframe = false;
     showDebug = true;
+    currentType = MushroomGenerator::BASIC;
 
-    // Set up camera for better initial view
-    cam.setDistance(15);
+    // Set up camera
+    cam.setDistance(10);
     cam.setNearClip(0.1);
     cam.setFarClip(1000);
-    cam.setPosition(10, 10, 10);
+    cam.setPosition(5, 5, 5);
     cam.lookAt(ofVec3f(0, 0, 0));
 
+    // Initialize mushroom
     mushroom.setup();
-    mushroom.generateMushroom(ofVec3f(0, 0, 0), 2.0f);
-
-    ofLogNotice() << "Application setup complete";
+    mushroom.generateMushroom(ofVec3f(0, 0, 0), 1.0f, currentType);
 }
 
 void ofApp::update() {
@@ -31,67 +27,64 @@ void ofApp::update() {
 void ofApp::draw() {
     ofBackground(40);
 
-    // Simple directional lighting
-    ofEnableLighting();
-    ofLight light;
-    light.setDirectional();
-    light.setPosition(10, 10, 10);
-    light.enable();
-
     cam.begin();
 
     // Draw coordinate system
     ofDrawAxis(10);
 
-    // Draw ground grid
+    // Draw grid
     ofPushStyle();
     ofSetColor(128);
     ofDrawGrid(10, 1, false, false, true, false);
     ofPopStyle();
 
-    // Always show debug for now
-    mushroom.drawDebug();
-
-    // Draw the mesh
-    if (wireframe) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    }
-
+    // Draw mushroom
     mushroom.draw();
 
     if (wireframe) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        mushroom.drawWireframe();
+    }
+
+    if (showDebug) {
+        mushroom.drawDebug();
     }
 
     cam.end();
 
-    // Draw debug info
+    // Draw UI
     ofSetColor(255);
-    stringstream info;
-    info << "FPS: " << ofGetFrameRate() << endl;
-    info << "Camera distance: " << cam.getDistance() << endl;
-    info << "Camera position: " << cam.getPosition() << endl;
-    info << "Press 'w' to toggle wireframe" << endl;
-    info << "Press 'd' to toggle debug view" << endl;
-    info << "Click to generate new mushroom" << endl;
-    info << "Left mouse: Rotate" << endl;
-    info << "Middle mouse: Pan" << endl;
-    info << "Right mouse: Zoom" << endl;
-
-    ofDrawBitmapString(info.str(), 10, 20);
+    string info = "FPS: " + ofToString(ofGetFrameRate(), 1) + "\n";
+    info += "Press 'w' to toggle wireframe\n";
+    info += "Press 'd' to toggle debug view\n";
+    info += "Press '1-3' to change mushroom type\n";
+    info += "Click to generate new mushroom";
+    ofDrawBitmapString(info, 10, 20);
 }
 
-
 void ofApp::keyPressed(int key) {
-    if (key == 'w') {
+    switch (key) {
+    case 'w':
         wireframe = !wireframe;
-    }
-    else if (key == 'd') {
+        break;
+    case 'd':
         showDebug = !showDebug;
+        break;
+    case '1':
+        currentType = MushroomGenerator::BASIC;
+        mushroom.generateMushroom(ofVec3f(0, 0, 0), 1.0f, currentType);
+        break;
+    case '2':
+        currentType = MushroomGenerator::AMANITA_MUSCARIA;
+        mushroom.generateMushroom(ofVec3f(0, 0, 0), 1.0f, currentType);
+        break;
+    case '3':
+        currentType = MushroomGenerator::GOLDEN_TEACHER;
+        mushroom.generateMushroom(ofVec3f(0, 0, 0), 1.0f, currentType);
+        break;
     }
 }
 
 void ofApp::mousePressed(int x, int y, int button) {
-    float scale = ofRandom(1.0, 3.0);
-    mushroom.generateMushroom(ofVec3f(0, 0, 0), scale);
+    float scale = ofRandom(0.5f, 1.5f);
+    mushroom.generateMushroom(ofVec3f(0, 0, 0), scale, currentType);
 }

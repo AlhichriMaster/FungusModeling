@@ -1,4 +1,3 @@
-// src/MetaBall.h
 #pragma once
 #include "ofMain.h"
 
@@ -12,6 +11,6 @@ public:
 
     float evaluate(ofVec3f point) const {
         float dist = position.distance(point);
-        return strength * radius * radius / (dist * dist + 0.000001);
+        return strength * radius * radius / (dist * dist + 0.000001f);
     }
 };
